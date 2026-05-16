@@ -146,12 +146,16 @@
 
         <div class="row">
           <input
-            type="text"
-            id="tarjeta"
-            placeholder="Numero de Tarjeta"
-            style="flex: 3"
-            required
-          />
+  type="text"
+  id="tarjeta"
+  placeholder="Número de Tarjeta"
+  style="flex: 3"
+  required
+  inputmode="numeric"
+  pattern="\d{16}"
+  maxlength="16"
+  title="El número de tarjeta debe tener exactamente 16 dígitos"
+/>
          <input
   type="text"
   id="cvv"
@@ -169,19 +173,27 @@
 
         <div class="row" style="align-items: center">
           <input
-            type="text"
-            id="mes"
-            placeholder="Mes"
-            style="width: 70px"
-            required
-          />
+  type="text"
+  id="mes"
+  placeholder="Mes"
+  style="width: 70px"
+  required
+  inputmode="numeric"
+  pattern="\d{2}"
+  maxlength="2"
+  title="El mes debe tener exactamente 2 dígitos (ej: 01 para Enero)"
+/>
           <input
-            type="text"
-            id="año"
-            placeholder="Año"
-            style="width: 70px"
-            required
-          />
+  type="text"
+  id="año"
+  placeholder="Año"
+  style="width: 70px"
+  required
+  inputmode="numeric"
+  pattern="\d{2}"
+  maxlength="2"
+  title="El año debe tener exactamente 2 dígitos (ej: 26)"
+/>
           <div class="logos-tarjetas-container">
             <img src="css/KidBS1D.jpg" alt="" />
           </div>
