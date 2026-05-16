@@ -152,13 +152,17 @@
             style="flex: 3"
             required
           />
-          <input
-            type="text"
-            id="cvv"
-            placeholder="CVV"
-            style="flex: 1"
-            required
-          />
+         <input
+  type="text"
+  id="cvv"
+  placeholder="CVV"
+  style="flex: 1"
+  required
+  inputmode="numeric"
+  pattern="\d{3}"
+  maxlength="3"
+  title="El CVV debe tener exactamente 3 números"
+/>
         </div>
 
         <p class="label-text">Fecha de Vencimiento:</p>
